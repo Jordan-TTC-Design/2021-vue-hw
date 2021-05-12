@@ -1,7 +1,3 @@
-//預設動作
-compoProductList.init();
-compoForm.init();
-
 //表單元件
 const compoForm = {
   //新增產品列表
@@ -120,14 +116,15 @@ const compoProductList = {
     return num;
   },
   //刪除全部資料
-  deleteProductListAll() {
-    if (this.data.length != 0) {
-      console.log('this.data 有資料');
-      this.data = [];
-      this.saveData();
-      this.renderProduct();
+  deleteProductListAll(that) {
+    console.log(that);
+    if (that.data.length != 0) {
+      console.log('that.data 有資料');
+      that.data = [];
+      that.saveData();
+      that.renderProduct();
     } else {
-      console.log('this.data 沒資料');
+      console.log('that.data 沒資料');
       return;
     }
   },
@@ -136,7 +133,15 @@ const compoProductList = {
     const that = this;
     //監聽刪除全部產品列表
     const clearAllProductBtn = document.querySelector('#clearAll');
-    clearAllProductBtn.addEventListener('click', that.deleteProductListAll);
+    clearAllProductBtn.addEventListener('click', function () {
+      that['deleteProductListAll'](that);
+    });
+    //如果寫成這樣就會直接執行刪除動作
+    // clearAllProductBtn.addEventListener(
+    //   'click',
+    //   that['deleteProductListAll'](that)
+    // );
+
     //監聽：對產品列表做出動作
     const productListTable = document.querySelector('#productList');
     productListTable.addEventListener('click', function (e) {
@@ -158,3 +163,6 @@ const compoProductList = {
     this.bindListener();
   },
 };
+//預設動作
+compoProductList.init();
+compoForm.init();
