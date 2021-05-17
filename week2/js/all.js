@@ -8,15 +8,8 @@ const login = {
     apiUrl: `https://vue3-course-api.hexschool.io`,
     api: `jordanttcdesign`,
   },
-  getData() {
-    let username = document.querySelector(`${this.dom.domEmail}`).value;
-    let password = document.querySelector(`${this.dom.domPassword}`).value;
-    const user = {
-      username,
-      password,
-    };
-
-    console.log(user);
+  login() {
+    const user = this.getData();
     axios
       .post(`${this.apiData.apiUrl}/admin/signin`, user)
       .then((res) => {
@@ -47,12 +40,22 @@ const login = {
         console.log(error);
       });
   },
+  getData() {
+    let username = document.querySelector(`${this.dom.domEmail}`).value;
+    let password = document.querySelector(`${this.dom.domPassword}`).value;
+    const user = {
+      username,
+      password,
+    };
+    // console.log(user);
+    return user;
+  },
   bind() {
     //綁定登入按鈕
     const login = document.querySelector(`${this.dom.loginBtn}`);
     login.addEventListener('click', (e) => {
       e.preventDefault();
-      this.getData();
+      this.login();
     });
   },
   init() {
