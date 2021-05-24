@@ -65,13 +65,13 @@
                 :data-id="item.id"
                 @click="openModal($event,item)"
               >
-                刪除{{item.title}}
+                刪除
               </button>
             </th>
           </tr>
         </tbody>
       </table>
-      <p>目前有 <span id="productCount">0</span> 項產品</p>
+      <p>目前有 <span id="productCount">{{products.length}}</span> 項產品</p>
       <!-- modal -->
       <div  id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel">
        <div class="modal-dialog modal-xl">

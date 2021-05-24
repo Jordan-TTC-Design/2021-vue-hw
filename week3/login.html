@@ -28,6 +28,7 @@
                   placeholder="name@example.com"
                   required
                   autofocus
+                  v-model="username"
                 />
                 <label for="username">Email address</label>
               </div>
@@ -38,13 +39,13 @@
                   id="password"
                   placeholder="Password"
                   required
+                  v-model="password"
                 />
                 <label for="password">Password</label>
               </div>
               <button
                 class="btn btn-lg btn-primary w-100 mt-3"
-                type="submit"
-                id="loginBtn"
+                @click="login()"
               >
                 登入
               </button>
