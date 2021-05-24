@@ -33,7 +33,7 @@ const login = {
             console.log(token, expired);
             document.cookie = `hexToken=${token};expires=${new Date(expired)}`;
             alert(`登入成功`);
-            window.location.href = 'adminProduct.html';
+            window.location.href = 'https://jordan-ttc-design.github.io/2021-vue-hw/week3/adminProduct.html';
             // this.username = '';
             // this.password = '';
           } else {
