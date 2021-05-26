@@ -1,8 +1,8 @@
 const login = {
-  data(){
-    return{
-      username:'',
-      password:'',
+  data() {
+    return {
+      username: '',
+      password: '',
       dom: {
         domEmail: '#username',
         domPassword: '#password',
@@ -12,19 +12,21 @@ const login = {
         apiUrl: `https://vue3-course-api.hexschool.io`,
         api: `jordanttcdesign`,
       },
-    }
+    };
   },
-  methods:{
+  methods: {
     login() {
       const user = {
-        username:this.username,
-        password:this.password
+        username: this.username,
+        password: this.password,
       };
       // console.log(user)
+      this.spinnerOpen();
       axios
         .post(`${this.apiData.apiUrl}/admin/signin`, user)
         .then((res) => {
-          // console.log(res);
+          this.spinnerClose();
+          console.log(res);
           let data = res.data;
           if (data.success === true) {
             //加入token
@@ -33,7 +35,7 @@ const login = {
             console.log(token, expired);
             document.cookie = `hexToken=${token};expires=${new Date(expired)}`;
             alert(`登入成功`);
-            window.location.href = 'https://jordan-ttc-design.github.io/2021-vue-hw/week3/adminProduct.html';
+            window.location.href = './adminProduct.html';
             // this.username = '';
             // this.password = '';
           } else {
@@ -46,9 +48,13 @@ const login = {
           console.log(error);
         });
     },
+    spinnerOpen() {
+      document.querySelector('.spinner').classList.add('spinner--open');
+    },
+    spinnerClose() {
+      document.querySelector('.spinner').classList.remove('spinner--open');
+    },
   },
-  created() {
-  },
+  created() {},
 };
 Vue.createApp(login).mount('#app');
-
