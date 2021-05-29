@@ -5,10 +5,6 @@ const appAdmin = {
       productModal: '',
       deleteProductModal: '',
       nowAction: '',
-      dom: {
-        domProductList: '#productList',
-        domProductCount: '#productCount',
-      },
       apiData: {
         apiUrl: `https://vue3-course-api.hexschool.io`,
         api: `jordanttcdesign`,
@@ -111,7 +107,6 @@ const appAdmin = {
         )
         .then((res) => {
           this.productModal.hide();
-
           this.getProductData();
         })
         .catch((error) => {
@@ -147,14 +142,14 @@ const appAdmin = {
       console.log(e.target.dataset.action);
       nowAction = e.target.dataset.action;
       if (nowAction == 'newProduct') {
-        this.nowAction = 'newProduct';
+        this.nowAction = e.target.dataset.action
         this.temProduct = {
           imagesUrl: [],
         };
         console.log(this.productModal);
         this.productModal.show();
       } else if (nowAction == 'editProduct') {
-        this.nowAction = 'editProduct';
+        this.nowAction = e.target.dataset.action
         console.log(item);
         if (!item.imagesUrl) {
           this.temProduct = { ...item, imagesUrl: [] };
@@ -163,7 +158,7 @@ const appAdmin = {
         }
         this.productModal.show();
       } else if (nowAction == 'deleteProduct') {
-        this.nowAction = 'deleteProduct';
+        this.nowAction = e.target.dataset.action
         console.log(item);
         if (!item.imagesUrl) {
           this.temProduct = { ...item, imagesUrl: [] };

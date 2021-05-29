@@ -3,11 +3,6 @@ const login = {
     return {
       username: '',
       password: '',
-      dom: {
-        domEmail: '#username',
-        domPassword: '#password',
-        loginBtn: '#loginBtn',
-      },
       apiData: {
         apiUrl: `https://vue3-course-api.hexschool.io`,
         api: `jordanttcdesign`,
