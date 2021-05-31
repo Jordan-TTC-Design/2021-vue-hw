@@ -193,9 +193,13 @@ appAdmin.component('productModalCompo', {
   },
   template: '#productModalCompo',
   created() {
-    modalTemProduct = this.temProduct;
+    this.modalTemProduct = this.temProduct;
     console.log(this.temProduct);
     console.log(this.modalTemProduct);
+  },
+  updated(){
+    this.modalTemProduct = this.temProduct;
+    // console.log(this.modalTemProduct);
   },
   methods: {
     addImageUrl() {
