@@ -140,6 +140,49 @@
          </div>
        </div>
     </script>
+    <!-- 子元件：產品列表 -->
+    <script type="text/x-template" id="productCardCompo">
+      <tr>
+        <th>{{item.title}}</th>
+        <th width="120">{{item.origin_price}}</th>
+        <th width="120">{{item.price}}</th>
+        <th width="150">
+          <div class="form-check form-switch">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              :id="item.id"
+              :data-id="item.id"
+              :checked="item.is_enabled > 0 ? true : false"
+              @change="$emit('change-product-state',item.id)"
+            />
+            <label class="form-check-label" :for="item.id"
+              >{{ item.is_enabled > 0 ? '啟動' : '未啟動' }}</label
+            >
+          </div>
+        </th>
+        <th width="120">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary move mr-1"
+            data-action="editProduct"
+            :data-id="item.id"
+            @click="$emit('open-modal',$event,item)"
+          >
+            編輯
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger move"
+            data-action="deleteProduct"
+            :data-id="item.id"
+            @click="$emit('open-modal',$event,item)"
+          >
+            刪除
+          </button>
+        </th>
+      </tr>
+    </script>
     <!-- 母元件主要內容 -->
     <div id="appAdmin" class="container">
       <div class="text-end mt-4">
@@ -162,46 +205,14 @@
           </tr>
         </thead>
         <tbody id="productList">
-          <tr v-for="item in products" :key="item.id">
-            <th>{{item.title}}</th>
-            <th width="120">{{item.origin_price}}</th>
-            <th width="120">{{item.price}}</th>
-            <th width="150">
-              <div class="form-check form-switch">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  :id="item.id"
-                  :data-id="item.id"
-                  :checked="item.is_enabled > 0 ? true : false"
-                  @change="changeProductState(item.id)"
-                />
-                <label class="form-check-label" :for="item.id"
-                  >{{ item.is_enabled > 0 ? '啟動' : '未啟動' }}</label
-                >
-              </div>
-            </th>
-            <th width="120">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-primary move mr-1"
-                data-action="editProduct"
-                :data-id="item.id"
-                @click="openModal($event,item)"
-              >
-                編輯
-              </button>
-              <button
-                type="button"
-                class="btn btn-sm btn-danger move"
-                data-action="deleteProduct"
-                :data-id="item.id"
-                @click="openModal($event,item)"
-              >
-                刪除
-              </button>
-            </th>
-          </tr>
+          <tr
+            v-is="'productCardCompo'"
+            v-for="product in products"
+            :key="product.id"
+            :item="product" 
+            @change-product-state="changeProductState"
+            @open-modal="openModal"
+          ></tr>
         </tbody>
       </table>
       <p>目前有 <span id="productCount">{{products.length}}</span> 項產品</p>
@@ -209,7 +220,11 @@
         :page="pagination"
         @get-product="getProductData"
       ></pagination-compo>
-      <product-modal-compo :tem-product="temProduct" :product-modal="productModal" @update-product="updateProduct"></product-modal-compo>
+      <product-modal-compo
+        :tem-product="temProduct"
+        :product-modal="productModal"
+        @update-product="updateProduct"
+      ></product-modal-compo>
       <!-- modal -->
 
       <div

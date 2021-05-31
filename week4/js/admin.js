@@ -1,3 +1,5 @@
+// import 'https://unpkg.com/mitt/dist/mitt.umd.js';
+// const emitter = mitt();
 const appAdmin = Vue.createApp({
   data() {
     return {
@@ -41,8 +43,8 @@ const appAdmin = Vue.createApp({
           // this.products = Object.values(res.data.products);
           this.products = res.data.products;
           this.pagination = res.data.pagination;
-          console.log(this.products);
-          console.log(this.pagination);
+          // console.log(this.products);
+          // console.log(this.pagination);
           this.spinnerClose();
         })
         .catch((error) => {
@@ -82,7 +84,7 @@ const appAdmin = Vue.createApp({
       let product = {
         data: updatedProduct,
       };
-      console.log(updatedProduct)
+      console.log(updatedProduct);
       let axiosAction = 'put';
       if (this.nowAction === 'newProduct') {
         axiosAction = 'post';
@@ -94,6 +96,7 @@ const appAdmin = Vue.createApp({
         product
       )
         .then((res) => {
+          console.log(res);
           this.productModal.hide();
           this.getProductData();
           this.temProduct = {
@@ -120,6 +123,7 @@ const appAdmin = Vue.createApp({
         });
     },
     openModal(e, item) {
+      // console.log(item)
       // console.log(e.target.dataset.action);
       nowAction = e.target.dataset.action;
       if (nowAction == 'newProduct') {
@@ -185,21 +189,31 @@ appAdmin.component('paginationCompo', {
   },
 });
 appAdmin.component('productModalCompo', {
-  props: ['temProduct','productModal'],
+  props: ['temProduct', 'productModal'],
   data() {
     return {
-      modalTemProduct:{imagesUrl:[]},
+      modalTemProduct: {imagesUrl:[]},
     };
+  },
+  watch:{
+    temProduct:{
+      deep:true,
+      handler(newValue,oldValue){
+        console.log(newValue)
+        this.modalTemProduct = newValue;
+      }
+    }
   },
   template: '#productModalCompo',
   created() {
-    this.modalTemProduct = this.temProduct;
-    console.log(this.temProduct);
-    console.log(this.modalTemProduct);
+    // this.modalTemProduct = this.temProduct;
+    // console.log(this.temProduct);
+    // console.log(this.modalTemProduct);
   },
   updated(){
-    this.modalTemProduct = this.temProduct;
-    // console.log(this.modalTemProduct);
+    // this.modalTemProduct = this.temProduct;
+    // console.log(this.temProduct);
+    console.log(this.modalTemProduct);
   },
   methods: {
     addImageUrl() {
@@ -208,12 +222,18 @@ appAdmin.component('productModalCompo', {
     deleteImageUrl() {
       this.modalTemProduct.imagesUrl.pop();
     },
-    updateProduct(){
-      console.log(this.modalTemProduct)
-      console.log(this.temProduct)
-      this.$emit('update-product',this.temProduct)
-    }
+    updateProduct() {
+      console.log(this.modalTemProduct);
+      console.log(this.temProduct);
+      this.$emit('update-product', this.modalTemProduct);
+    },
   },
 });
-
+appAdmin.component('productCardCompo', {
+  props: ['item'],
+  template: '#productCardCompo',
+  created() {
+    // console.log(this.item);
+  },
+});
 appAdmin.mount('#appAdmin');
